@@ -1,0 +1,27 @@
+{
+	"name": "Trigger_mpf",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CpoyCloudStreaming",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2020-08-31T11:23:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

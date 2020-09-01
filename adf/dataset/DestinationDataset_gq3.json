@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_gq3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MDWDatalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Movies.json",
+				"folderPath": "Movies",
+				"fileSystem": "southridge"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

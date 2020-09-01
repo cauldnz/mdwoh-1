@@ -1,0 +1,137 @@
+{
+	"name": "copy_VanArsdel",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_6nd",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_6nd",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "dbo.@{item().source.table}"
+								},
+								{
+									"name": "Destination",
+									"value": "southridge/vanarsdel/@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}/@{item().destination.fileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "SqlServerSource",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"validateDataConsistency": false
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_6nd",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_table": "@item().source.table"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_6nd",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": "@item().destination.fileName",
+										"cw_folderPath": "vanarsdel/@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"table": "Actors"
+						},
+						"destination": {
+							"fileName": "dboActors.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "Customers"
+						},
+						"destination": {
+							"fileName": "dboCustomers.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "MovieActors"
+						},
+						"destination": {
+							"fileName": "dboMovieActors.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "Movies"
+						},
+						"destination": {
+							"fileName": "dboMovies.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "OnlineMovieMappings"
+						},
+						"destination": {
+							"fileName": "dboOnlineMovieMappings.parquet"
+						}
+					},
+					{
+						"source": {
+							"table": "Transactions"
+						},
+						"destination": {
+							"fileName": "dboTransactions.parquet"
+						}
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-08-31T12:25:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

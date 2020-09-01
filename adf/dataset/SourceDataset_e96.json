@@ -1,0 +1,35 @@
+{
+	"name": "SourceDataset_e96",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CSV_FourthCoffee",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ActorID",
+				"type": "String"
+			},
+			{
+				"name": "ActorName",
+				"type": "String"
+			},
+			{
+				"name": "Gender",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

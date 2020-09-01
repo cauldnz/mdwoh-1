@@ -1,0 +1,151 @@
+{
+	"name": "CopyPipeline_gq3",
+	"properties": {
+		"description": "Copy Movies  from Cosmos DB to Data Lake",
+		"activities": [
+			{
+				"name": "Copy_gq3",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "movies"
+					},
+					{
+						"name": "Destination",
+						"value": "southridge/Movies/Movies.json"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "CosmosDbSqlApiSource",
+						"preferredRegions": [],
+						"pageSize": -1,
+						"detectDatetime": true
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"filePattern": "arrayOfObjects"
+						}
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['actors']"
+								},
+								"sink": {
+									"path": "$['actors']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['availabilityDate']"
+								},
+								"sink": {
+									"path": "$['availabilityDate']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['genre']"
+								},
+								"sink": {
+									"path": "$['genre']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['rating']"
+								},
+								"sink": {
+									"path": "$['rating']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['releaseYear']"
+								},
+								"sink": {
+									"path": "$['releaseYear']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['runtime']"
+								},
+								"sink": {
+									"path": "$['runtime']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['streamingAvailabilityDate']"
+								},
+								"sink": {
+									"path": "$['streamingAvailabilityDate']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['tier']"
+								},
+								"sink": {
+									"path": "$['tier']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['title']"
+								},
+								"sink": {
+									"path": "$['title']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"path": "$['id']"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_gq3",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_gq3",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-08-31T10:00:36Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

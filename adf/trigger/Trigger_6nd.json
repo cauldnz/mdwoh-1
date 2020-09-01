@@ -1,0 +1,27 @@
+{
+	"name": "Trigger_6nd",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copy_VanArsdel",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2020-08-31T01:14:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

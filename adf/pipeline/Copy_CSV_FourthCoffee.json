@@ -1,0 +1,82 @@
+{
+	"name": "Copy_CSV_FourthCoffee",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_e96",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/"
+					},
+					{
+						"name": "Destination",
+						"value": "southridge/fourth_coffee/@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}/"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "MDWDatalake",
+							"type": "LinkedServiceReference"
+						},
+						"path": "southridge/fourthcoffee_logs"
+					},
+					"validateDataConsistency": true
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_e96",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_e96",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_folderPath": "fourth_coffee/@{formatDateTime(pipeline().parameters.windowStart,'yyyy')}/@{formatDateTime(pipeline().parameters.windowStart,'MM')}/@{formatDateTime(pipeline().parameters.windowStart,'dd')}"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-08-31T12:53:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

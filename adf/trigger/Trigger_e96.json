@@ -1,0 +1,27 @@
+{
+	"name": "Trigger_e96",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Copy_CSV_FourthCoffee",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2020-08-31T01:14:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
